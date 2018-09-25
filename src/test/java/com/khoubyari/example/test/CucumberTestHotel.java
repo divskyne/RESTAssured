@@ -5,7 +5,6 @@ import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.Assert;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -13,6 +12,7 @@ import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import junit.framework.Assert;
 
 public class CucumberTestHotel {
 	
@@ -80,5 +80,19 @@ public class CucumberTestHotel {
 	public void the_name_is_equal_to(String arg1) {
 		JSONObject obj = new JSONObject (response.body().asString());
 		Assert.assertEquals(arg1, obj.get("name"));
+	}
+	
+	@Then("^all the \"([^\"]*)\" are valid$")
+	public void all_the_are_valid(String arg1) {
+		JSONObject obj = new JSONObject (response.body().asString());
+		JSONArray jArray = obj.getJSONArray("content");
+		  for (Object object : jArray) 
+		  {
+			  JSONObject o = (JSONObject) object;
+			  System.out.println(o.getString("name"));
+			  if (o.getString("name").equals(arg1)) {
+				  Assert.assertEquals(arg1, o.getString("name"));
+			}
+		  }
 	}
 }

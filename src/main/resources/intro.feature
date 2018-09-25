@@ -11,7 +11,7 @@ Scenario Outline: Testing add new Hotel
   And a user retrieves all the hotels
   Then the hotel with name <id> and "<name>" must be there  
 Examples:
-    | id   | name |
+    | id | name |
     | 1 | Veedu |
     | 2 | Veedu 1 |
     | 3 | Veedu 2 |
@@ -31,9 +31,19 @@ When a user retrieves the hotel by the id <id>
    And the name is equal to "<name>"
    
 Examples:
-    | id   | name |
+    | id | name |
+    | 1 | Veedu |
     | 1 | Veedu |
     | 2 | Veedu 1 |
     | 3 | Veedu 2 |
     | 4 | Veedu 3 |
-    
+Scenario Outline: Testing all the hotels
+Given the content type is JSON
+  When a user retrieves all the hotels
+  Then all the "<name>" are valid
+Examples:
+    | name |
+    | Veedu |
+    | Veedu 1 |
+    | Veedu 2 |
+    | Veedu 3 |
